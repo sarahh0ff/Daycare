@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycare.Domain", "Daycare.Domain\Daycare.Domain.csproj", "{BAE04F33-AA25-443B-A3AD-F139250B7EFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycare.Application", "Daycare.Application\Daycare.Application.csproj", "{6C2936CC-0797-46EA-802C-57D8758155B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAE04F33-AA25-443B-A3AD-F139250B7EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE04F33-AA25-443B-A3AD-F139250B7EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE04F33-AA25-443B-A3AD-F139250B7EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE04F33-AA25-443B-A3AD-F139250B7EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2936CC-0797-46EA-802C-57D8758155B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2936CC-0797-46EA-802C-57D8758155B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2936CC-0797-46EA-802C-57D8758155B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2936CC-0797-46EA-802C-57D8758155B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EADAD3BB-2F82-46B5-A475-0372E2462F39}
+	EndGlobalSection
+EndGlobal
