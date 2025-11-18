@@ -1,0 +1,6 @@
+@Daycore.Api_HostAddress = http://localhost:5068
+
+GET {{Daycore.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

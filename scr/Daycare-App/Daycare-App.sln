@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycare.Domain", "Daycare.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycare.Application", "Daycare.Application\Daycare.Application.csproj", "{6C2936CC-0797-46EA-802C-57D8758155B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycare.Infrastructure", "Daycare.Infrastructure\Daycare.Infrastructure.csproj", "{40A9E5B8-119C-4A30-BC08-347B4CCEC2C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daycore.Api", "Daycore.Api\Daycore.Api.csproj", "{D666071F-9AA6-49CB-8F08-69CEC032029A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6C2936CC-0797-46EA-802C-57D8758155B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2936CC-0797-46EA-802C-57D8758155B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2936CC-0797-46EA-802C-57D8758155B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A9E5B8-119C-4A30-BC08-347B4CCEC2C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A9E5B8-119C-4A30-BC08-347B4CCEC2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A9E5B8-119C-4A30-BC08-347B4CCEC2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A9E5B8-119C-4A30-BC08-347B4CCEC2C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D666071F-9AA6-49CB-8F08-69CEC032029A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D666071F-9AA6-49CB-8F08-69CEC032029A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D666071F-9AA6-49CB-8F08-69CEC032029A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D666071F-9AA6-49CB-8F08-69CEC032029A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
