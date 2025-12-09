@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Daycare.Domain.Entities;
+﻿using Daycare.Domain.Entities;
 using Daycare.Infrastructure.Context;
 using Daycare.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -39,18 +34,21 @@ namespace Daycare.Infrastructure.Repositories
         public async Task AddAsync(Attendance attendance)
         {
             await _context.Attendances.AddAsync(attendance);
+            // SIN SaveChanges aquí
         }
 
         public void Update(Attendance attendance)
         {
             attendance.UpdatedAt = DateTime.UtcNow;
             _context.Attendances.Update(attendance);
+            // SIN SaveChanges aquí
         }
 
         public void Delete(Attendance attendance)
         {
             attendance.MarkAsDeleted();
             _context.Attendances.Update(attendance);
+            // SIN SaveChanges aquí
         }
 
         public async Task<IEnumerable<Attendance>> GetByChildIdAsync(int childId)

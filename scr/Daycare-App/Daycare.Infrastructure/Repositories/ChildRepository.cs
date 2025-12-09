@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Daycare.Domain.Entities;
 using Daycare.Infrastructure.Context;
@@ -21,44 +18,30 @@ namespace Daycare.Infrastructure.Repositories
 
         public async Task<IEnumerable<Child>> GetAllAsync()
         {
-            return await _context.Children
-                .Where(c => !c.IsDeleted)
-                .ToListAsync();
+            return await _context.Children.ToListAsync();
         }
 
         public async Task<Child?> GetByIdAsync(int id)
         {
-            return await _context.Children
-                .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
+            return await _context.Children.FindAsync(id);
         }
 
-        public async Task AddAsync(Child child)
+        public async Task AddAsync(Child entity)
         {
-            await _context.Children.AddAsync(child);
+            await _context.Children.AddAsync(entity);
+            // SIN SaveChanges aquí
         }
 
-        public void Update(Child child)
+        public void Update(Child entity)
         {
-            child.UpdatedAt = DateTime.UtcNow;
-            _context.Children.Update(child);
+            _context.Children.Update(entity);
+            // SIN SaveChanges aquí
         }
 
-        public void Delete(Child child)
+        public void Delete(Child entity)
         {
-            child.MarkAsDeleted();
-            _context.Children.Update(child);
-        }
-
-        public async Task<IEnumerable<Child>> GetByGuardianIdAsync(int guardianId)
-        {
-            return await _context.Children
-                .Where(c => c.GuardianId == guardianId && !c.IsDeleted)
-                .ToListAsync();
-        }
-
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.Children.AnyAsync(c => c.Id == id && !c.IsDeleted);
+            _context.Children.Remove(entity);
+            // SIN SaveChanges aquí
         }
     }
 }

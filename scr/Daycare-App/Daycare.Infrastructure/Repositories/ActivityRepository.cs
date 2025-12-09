@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Daycare.Domain.Entities;
 using Daycare.Infrastructure.Context;
@@ -37,18 +36,21 @@ namespace Daycare.Infrastructure.Repositories
         public async Task AddAsync(Activity activity)
         {
             await _context.Activities.AddAsync(activity);
+            // SIN SaveChanges aquí
         }
 
         public void Update(Activity activity)
         {
             activity.UpdatedAt = DateTime.UtcNow;
             _context.Activities.Update(activity);
+            // SIN SaveChanges aquí
         }
 
         public void Delete(Activity activity)
         {
             activity.MarkAsDeleted();
             _context.Activities.Update(activity);
+            // SIN SaveChanges aquí
         }
 
         public async Task<IEnumerable<Activity>> GetByDateAsync(DateTime date)

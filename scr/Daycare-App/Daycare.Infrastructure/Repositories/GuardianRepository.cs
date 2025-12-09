@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Daycare.Domain.Entities;
 using Daycare.Infrastructure.Context;
@@ -29,25 +28,28 @@ namespace Daycare.Infrastructure.Repositories
         public async Task<Guardian?> GetByIdAsync(int id)
         {
             return await _context.Guardians
-                .Include(g => g.Children) 
+                .Include(g => g.Children)
                 .FirstOrDefaultAsync(g => g.Id == id && !g.IsDeleted);
         }
 
         public async Task AddAsync(Guardian guardian)
         {
             await _context.Guardians.AddAsync(guardian);
+            // SIN SaveChanges aquí
         }
 
         public void Update(Guardian guardian)
         {
             guardian.UpdatedAt = DateTime.UtcNow;
             _context.Guardians.Update(guardian);
+            // SIN SaveChanges aquí
         }
 
         public void Delete(Guardian guardian)
         {
             guardian.MarkAsDeleted();
             _context.Guardians.Update(guardian);
+            // SIN SaveChanges aquí
         }
 
         public async Task<bool> ExistsAsync(int id)
@@ -63,4 +65,3 @@ namespace Daycare.Infrastructure.Repositories
         }
     }
 }
-

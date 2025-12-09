@@ -1,21 +1,20 @@
-﻿using AutoMapper;
-using Daycare.Application.DTOs;
+﻿// Daycare.Application/Mapping/DaycareProfile.cs
+using AutoMapper;
 using Daycare.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Daycare.Application.DTOs;
 
 namespace Daycare.Application.Mapping
 {
-    public class MappingProfile : Profile
+    public class DaycareProfile : Profile
     {
-        public MappingProfile()
+        public DaycareProfile()
         {
-            CreateMap<Child, ChildDto>();
-            CreateMap<ChildDto, Child>();
+            // Entity <-> DTO
+            CreateMap<Child, ChildDto>().ReverseMap();
+            CreateMap<Guardian, GuardianDto>().ReverseMap();
+            CreateMap<Attendance, AttendanceDto>().ReverseMap();
+            CreateMap<Activity, ActivityDto>().ReverseMap();
+
         }
     }
 }

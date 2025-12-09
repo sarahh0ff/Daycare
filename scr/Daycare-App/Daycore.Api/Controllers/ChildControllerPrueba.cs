@@ -1,104 +1,60 @@
-﻿using AutoMapper;
-using Daycare.Application.DTOs;
-using Daycare.Domain.Entities;
-using Daycare.Infrastructure.Interfaces;
+﻿using Daycare.Application.DTOs;
+using Daycare.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Daycare.API.Controllers
+namespace Daycore.Api.Controllers   
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ChildController : ControllerBase
+    [Route("api/[controller]")]
+    public class ChildrenController : ControllerBase
     {
-        private readonly IChildRepository _childRepository;
-        private readonly IMapper _mapper;
+        private readonly IChildService _childService;
 
-        public ChildController(IChildRepository childRepository, IMapper mapper)
+        public ChildrenController(IChildService childService)
         {
-            _childRepository = childRepository;
-            _mapper = mapper;
+            _childService = childService;
         }
 
-        // ================================
-        // GET ALL - api/child
-        // ================================
+        // GET: api/children
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<ChildDto>>> GetAll()
         {
-            var children = await _childRepository.GetAllAsync();
-            var result = _mapper.Map<IEnumerable<ChildDto>>(children);
+            var result = await _childService.GetAllAsync();
             return Ok(result);
         }
 
-        // ================================
-        // GET BY ID - api/child/{id}
-        // ================================
+        // GET: api/children/5
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<ChildDto>> GetById(int id)
         {
-            var child = await _childRepository.GetByIdAsync(id);
-
-            if (child == null)
-                return NotFound(new { message = $"Child with ID {id} not found." });
-
-            var result = _mapper.Map<ChildDto>(child);
-            return Ok(result);
+            var child = await _childService.GetByIdAsync(id);
+            if (child == null) return NotFound();
+            return Ok(child);
         }
 
-        // ================================
-        // CREATE - api/child
-        // ================================
+        // POST: api/children
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ChildDto dto)
+        public async Task<ActionResult<ChildDto>> Create([FromBody] ChildDto dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var newChild = _mapper.Map<Child>(dto);
-
-            await _childRepository.AddAsync(newChild);
-
-            var result = _mapper.Map<ChildDto>(newChild);
-
-            return CreatedAtAction(nameof(GetById), new { id = newChild.Id }, result);
+            var created = await _childService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-
-        // ================================
-        // UPDATE - api/child/{id}
-        // ================================
-
+        // PUT: api/children/5
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] ChildDto dto)
         {
-            var child = await _childRepository.GetByIdAsync(id);
-
-            if (child == null)
-                return NotFound(new { message = $"Child with ID {id} not found." });
-
-            _mapper.Map(dto, child);
-
-            _childRepository.Update(child);
-
-            var result = _mapper.Map<ChildDto>(child);
-
-            return Ok(result);
+            var success = await _childService.UpdateAsync(id, dto);
+            if (!success) return NotFound();
+            return NoContent();
         }
 
-
-        // ================================
-        // DELETE - api/child/{id}
-        // ================================
+        // DELETE: api/children/5
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var child = await _childRepository.GetByIdAsync(id);
-
-            if (child == null)
-                return NotFound(new { message = $"Child with ID {id} not found." });
-
-            _childRepository.Delete(child);
-
+            var success = await _childService.DeleteAsync(id);
+            if (!success) return NotFound();
             return NoContent();
         }
     }
