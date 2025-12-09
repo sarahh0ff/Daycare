@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 
+
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -32,7 +34,11 @@ internal class Program
 
         // Add services to the container
         builder.Services.AddScoped<IChildService, ChildService>();
+        builder.Services.AddScoped<IGuardianService, GuardianService>();
+        builder.Services.AddScoped<IActivityService, ActivityService>();
+        builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
+        // Controllers
         builder.Services.AddControllers();
 
 

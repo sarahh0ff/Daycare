@@ -10,10 +10,15 @@ namespace Daycare.Application.Mapping
         public DaycareProfile()
         {
             // Entity <-> DTO
-            CreateMap<Child, ChildDto>().ReverseMap();
+
+            CreateMap<ChildDto, Child>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Guardian, GuardianDto>().ReverseMap();
-            CreateMap<Attendance, AttendanceDto>().ReverseMap();
-            CreateMap<Activity, ActivityDto>().ReverseMap();
+            CreateMap<Attendance, AttendanceDto>().ReverseMap()
+             .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<Activity, ActivityDto>().ReverseMap()
+    .ForMember(dest => dest.Id, opt => opt.Ignore());
+
 
         }
     }
