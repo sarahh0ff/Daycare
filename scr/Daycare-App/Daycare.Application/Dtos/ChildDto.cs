@@ -28,7 +28,7 @@ namespace Daycare.Application.DTOs
 
         public string? Notes { get; set; }
 
-        public int GuardianId { get; set; }
+        public int? GuardianId { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

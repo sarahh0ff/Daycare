@@ -4,6 +4,7 @@ using Daycare.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Daycare.Infrastructure.Migrations
 {
     [DbContext(typeof(DaycareDBContext))]
-    partial class DaycareDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251209184258_MakeGuardianOptional")]
+    partial class MakeGuardianOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
