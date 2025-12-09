@@ -12,8 +12,9 @@ namespace Daycare.Domain.Entities
         public string EnrollmentNumber { get; set; } = string.Empty; 
         public DateTime EnrollmentDate { get; set; } = DateTime.UtcNow;  
         public string? Allergies { get; set; } 
-        public string? Notes { get; set; } 
+        public string? Notes { get; set; }
+        public int? GuardianId { get; set; }
+        public Guardian? Guardian { get; set; }
 
-        public int GuardianId { get; set; }
     }
 }
