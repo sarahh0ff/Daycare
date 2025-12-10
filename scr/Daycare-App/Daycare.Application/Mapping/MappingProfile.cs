@@ -3,23 +3,33 @@ using AutoMapper;
 using Daycare.Domain.Entities;
 using Daycare.Application.DTOs;
 
-namespace Daycare.Application.Mapping
+
+namespace Daycare.Application.Mapping;
+
+
+public class DaycareProfile : Profile
 {
-    public class DaycareProfile : Profile
+    public DaycareProfile()
     {
-        public DaycareProfile()
-        {
-            // Entity <-> DTO
+        // CHILD
+        CreateMap<ChildDto, Child>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore()) // solo DTO -> Entity
+            .ReverseMap();                                   // Entity -> DTO (con Id)
 
-            CreateMap<ChildDto, Child>().ReverseMap()
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<Guardian, GuardianDto>().ReverseMap();
-            CreateMap<Attendance, AttendanceDto>().ReverseMap()
-             .ForMember(dest => dest.Id, opt => opt.Ignore());
-            CreateMap<Activity, ActivityDto>().ReverseMap()
-    .ForMember(dest => dest.Id, opt => opt.Ignore());
+        // GUARDIAN
+        CreateMap<GuardianDto, Guardian>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ReverseMap();
 
+        // ACTIVITY
+        CreateMap<ActivityDto, Activity>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ReverseMap();
 
-        }
+        // ATTENDANCE
+        CreateMap<AttendanceDto, Attendance>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ReverseMap();
     }
 }
+

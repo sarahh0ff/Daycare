@@ -1,45 +1,37 @@
-﻿// ================== CONFIGURACIÓN BASE ==================
+﻿// ==========================================================
+//  CONFIGURACIÓN BASE
+// ==========================================================
 
-// Usamos la misma origin de tu API
 const API_BASE = "https://localhost:7235/api";
-
-// Si cambias la ruta en tu API, solo modificas estos:
-const ATTENDANCE_PATH = "/Attendances"; // o "/Attendance" si así se llama tu controlador
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-function show(el) { el.classList.remove("hidden"); }
-function hide(el) { el.classList.add("hidden"); }
+function show(el) { el && el.classList.remove("hidden"); }
+function hide(el) { el && el.classList.add("hidden"); }
 
-// ================== MENSAJES REUTILIZABLES ==================
-
+// Mensajes pequeños debajo de cada formulario
 function setChildMessage(text) {
     const msg = $("#childFormMessage");
     if (msg) msg.textContent = text || "";
 }
-
 function setGuardianMessage(text) {
     const msg = $("#guardianFormMessage");
     if (msg) msg.textContent = text || "";
 }
-
 function setActivityMessage(text) {
     const msg = $("#activityFormMessage");
     if (msg) msg.textContent = text || "";
 }
-
 function setAttendanceMessage(text) {
     const msg = $("#attendanceFormMessage");
     if (msg) msg.textContent = text || "";
 }
 
-// ===== Helper genérico para llamar a la API =====
+// Llamadas genéricas a la API
 async function apiRequest(path, { method = "GET", body = null } = {}) {
     const headers = {};
-    if (body !== null) {
-        headers["Content-Type"] = "application/json";
-    }
+    if (body !== null) headers["Content-Type"] = "application/json";
 
     const res = await fetch(`${API_BASE}${path}`, {
         method,
@@ -56,22 +48,17 @@ async function apiRequest(path, { method = "GET", body = null } = {}) {
     return res.status === 204 ? null : res.json();
 }
 
-// ================== HELPERS FECHA / HORA ==================
+// ==========================================================
+//  HELPERS DE FECHA / HORA SOLO PARA MOSTRAR EN LA TABLA
+// ==========================================================
 
 function formatDateOnly(value) {
     if (!value) return "";
     try {
-        // Si viene "2025-12-10T09:13:00"
-        if (typeof value === "string" && value.includes("T")) {
-            return value.split("T")[0];
-        }
-
-        const d = new Date(value);
-        if (isNaN(d)) {
-            // Si no se puede parsear, devolvemos los primeros 10 chars
-            return String(value).slice(0, 10);
-        }
-
+        const str = String(value);
+        if (str.includes("T")) return str.split("T")[0];
+        const d = new Date(str);
+        if (isNaN(d)) return str.slice(0, 10);
         const y = d.getFullYear();
         const m = String(d.getMonth() + 1).padStart(2, "0");
         const day = String(d.getDate()).padStart(2, "0");
@@ -85,24 +72,16 @@ function formatTimeOnly(value) {
     if (!value) return "";
     try {
         const str = String(value);
-
-        // Si viene "2025-12-10T09:13:00"
-        if (str.includes("T")) {
-            return str.split("T")[1].slice(0, 5);
-        }
-
-        // Si viene "09:13:00" o "09:13"
-        const parts = str.split(":");
-        const hh = parts[0] ?? "00";
-        const mm = parts[1] ?? "00";
-        return `${hh.padStart(2, "0")}:${mm.padStart(2, "0")}`;
+        if (str.includes("T")) return str.split("T")[1].slice(0, 5);
+        const [h = "00", m = "00"] = str.split(":");
+        return `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
     } catch {
         return "";
     }
 }
 
 // ==========================================================
-// ================== MÓDULO: NIÑOS ==========================
+//  MÓDULO: NIÑOS
 // ==========================================================
 
 async function loadChildren() {
@@ -110,21 +89,15 @@ async function loadChildren() {
     const countLabel = $("#childrenCount");
     if (!tbody) return;
 
-    // Mientras carga
-    tbody.innerHTML = `
-        <tr><td colspan="7" class="table-empty">Cargando niños...</td></tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="7" class="table-empty">Cargando niños...</td></tr>`;
     if (countLabel) countLabel.textContent = "…";
 
     try {
-        const data = await apiRequest("/Children"); // GET /api/Children
+        const data = await apiRequest("/Children");
 
         if (!Array.isArray(data) || data.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="7" class="table-empty">No hay niños registrados.</td></tr>
-            `;
+            tbody.innerHTML = `<tr><td colspan="7" class="table-empty">No hay niños registrados.</td></tr>`;
             if (countLabel) countLabel.textContent = "0";
-            // también limpiamos el select de asistencia
             populateAttendanceChildSelect([]);
             return;
         }
@@ -148,17 +121,14 @@ async function loadChildren() {
             tbody.appendChild(tr);
         });
 
-        if (countLabel) countLabel.textContent = data.length.toString();
-
-        // rellenamos el combo de asistencia
+        if (countLabel) countLabel.textContent = String(data.length);
         populateAttendanceChildSelect(data);
     } catch (err) {
         console.error(err);
         tbody.innerHTML = `
             <tr><td colspan="7" class="table-empty">
                 Error al cargar niños: ${err.message}
-            </td></tr>
-        `;
+            </td></tr>`;
         if (countLabel) countLabel.textContent = "!";
     }
 }
@@ -173,8 +143,8 @@ async function createChild(e) {
     const email = $("#childEmail")?.value.trim() ?? "";
     const phoneNumber = $("#childPhone")?.value.trim() ?? "";
     const enrollmentNumber = $("#childEnrollmentNumber")?.value.trim() || "CH-AUTO";
-    const allergies = $("#childAllergies")?.value.trim() || null;
-    const notes = $("#childNotes")?.value.trim() || null;
+    const allergies = $("#childAllergies")?.value.trim() || "";
+    const notes = $("#childNotes")?.value.trim() || "";
 
     if (!firstName || !lastName || !dateOfBirth) {
         setChildMessage("Nombre, apellido y fecha de nacimiento son obligatorios.");
@@ -184,14 +154,14 @@ async function createChild(e) {
     const body = {
         firstName,
         lastName,
-        dateOfBirth,
+        dateOfBirth,                  // DateTime en el DTO
         email,
         phoneNumber,
         enrollmentNumber,
         enrollmentDate: new Date().toISOString(),
         allergies,
         notes,
-        guardianId: null // más adelante podrás vincularlo a un tutor
+        guardianId: null
     };
 
     try {
@@ -205,7 +175,6 @@ async function createChild(e) {
     }
 }
 
-// Eliminar niño (delegación en el tbody)
 function initChildDeleteHandler() {
     const tbody = $("#childrenTableBody");
     if (!tbody) return;
@@ -231,7 +200,7 @@ function initChildDeleteHandler() {
 }
 
 // ==========================================================
-// ================== MÓDULO: TUTORES =======================
+//  MÓDULO: TUTORES
 // ==========================================================
 
 async function loadGuardians() {
@@ -239,18 +208,14 @@ async function loadGuardians() {
     const countLabel = $("#guardiansCount");
     if (!tbody) return;
 
-    tbody.innerHTML = `
-        <tr><td colspan="8" class="table-empty">Cargando tutores...</td></tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="8" class="table-empty">Cargando tutores...</td></tr>`;
     if (countLabel) countLabel.textContent = "…";
 
     try {
-        const data = await apiRequest("/Guardians"); // GET /api/Guardians
+        const data = await apiRequest("/Guardians");
 
         if (!Array.isArray(data) || data.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="8" class="table-empty">No hay tutores registrados.</td></tr>
-            `;
+            tbody.innerHTML = `<tr><td colspan="8" class="table-empty">No hay tutores registrados.</td></tr>`;
             if (countLabel) countLabel.textContent = "0";
             return;
         }
@@ -275,14 +240,13 @@ async function loadGuardians() {
             tbody.appendChild(tr);
         });
 
-        if (countLabel) countLabel.textContent = data.length.toString();
+        if (countLabel) countLabel.textContent = String(data.length);
     } catch (err) {
         console.error(err);
         tbody.innerHTML = `
             <tr><td colspan="8" class="table-empty">
                 Error al cargar tutores: ${err.message}
-            </td></tr>
-        `;
+            </td></tr>`;
         if (countLabel) countLabel.textContent = "!";
     }
 }
@@ -323,7 +287,6 @@ async function createGuardian(e) {
     }
 }
 
-// Eliminar tutor (delegación)
 function initGuardianDeleteHandler() {
     const tbody = $("#guardiansTableBody");
     if (!tbody) return;
@@ -349,55 +312,36 @@ function initGuardianDeleteHandler() {
 }
 
 // ==========================================================
-// ================== MÓDULO: ACTIVIDADES ===================
+//  MÓDULO: ACTIVIDADES
 // ==========================================================
 
 async function loadActivities() {
     const tbody = $("#activitiesTableBody");
-    const countLabel = $("#activitiesCount"); // opcional
     if (!tbody) return;
 
-    tbody.innerHTML = `
-        <tr><td colspan="7" class="table-empty">Cargando actividades...</td></tr>
-    `;
-    if (countLabel) countLabel.textContent = "…";
+    tbody.innerHTML = `<tr><td colspan="5" class="table-empty">Cargando actividades...</td></tr>`;
 
     try {
-        const data = await apiRequest("/Activities"); // GET /api/Activities
+        const data = await apiRequest("/Activities");
 
         if (!Array.isArray(data) || data.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="7" class="table-empty">No hay actividades registradas.</td></tr>
-            `;
-            if (countLabel) countLabel.textContent = "0";
+            tbody.innerHTML = `<tr><td colspan="5" class="table-empty">No hay actividades registradas.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = "";
         data.forEach(a => {
-            // Nombre de la actividad: soportamos varios nombres de propiedad
-            const rawName =
-                (a.name ??
-                    a.activityName ??
-                    a.nombre ??
-                    "") + "";
-
-            const activityName =
-                rawName.trim().length > 0 ? rawName.trim() : "(sin nombre)";
-
-            const dateRaw = a.date ?? a.activityDate ?? a.startTime ?? a.start ?? null;
-            const startRaw = a.startTime ?? a.start ?? null;
-            const endRaw = a.endTime ?? a.end ?? null;
-            const notes = a.notes ?? a.descripcion ?? "";
+            const name = (a.name ?? a.activityName ?? "(sin nombre)").toString();
+            const start = a.startTime ?? a.start ?? null;
+            const end = a.endTime ?? a.end ?? null;
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${a.id}</td>
-                <td>${activityName}</td>
-                <td>${formatDateOnly(dateRaw)}</td>
-                <td>${formatTimeOnly(startRaw)}</td>
-                <td>${formatTimeOnly(endRaw)}</td>
-                <td>${notes}</td>
+                <td>${name}</td>
+                <td>${formatDateOnly(start)}</td>
+                <td>${formatTimeOnly(start)}</td>
+                <td>${formatTimeOnly(end)}</td>
                 <td>
                     <button type="button" class="btn-delete-activity" data-id="${a.id}">
                         Eliminar
@@ -406,16 +350,12 @@ async function loadActivities() {
             `;
             tbody.appendChild(tr);
         });
-
-        if (countLabel) countLabel.textContent = data.length.toString();
     } catch (err) {
         console.error(err);
         tbody.innerHTML = `
-            <tr><td colspan="7" class="table-empty">
+            <tr><td colspan="5" class="table-empty">
                 Error al cargar actividades: ${err.message}
-            </td></tr>
-        `;
-        if (countLabel) countLabel.textContent = "!";
+            </td></tr>`;
     }
 }
 
@@ -423,36 +363,36 @@ async function createActivity(e) {
     e.preventDefault();
     setActivityMessage("");
 
-    // Soportamos dos posibles IDs por si cambiaste el HTML
-    const nameInputEl = $("#activityName") || $("#activityTitle");
-    const dateEl = $("#activityDate");
-    const startEl = $("#activityStartTime") || $("#activityStart");
-    const endEl = $("#activityEndTime") || $("#activityEnd");
-    const notesEl = $("#activityNotes");
+    const nameInput = $("#activityTitle") || $("#activityName");
+    const descInput = $("#activityDescription");
+    const dateInput = $("#activityDate");
+    const startInput = $("#activityStartTime") || $("#activityStart");
+    const endInput = $("#activityEndTime") || $("#activityEnd");
 
-    if (!nameInputEl || !dateEl || !startEl || !endEl) {
-        setActivityMessage("Faltan campos del formulario de actividad.");
+    if (!nameInput || !dateInput || !startInput || !endInput) {
+        setActivityMessage("Faltan campos del formulario.");
         return;
     }
 
-    const name = nameInputEl.value.trim();
-    const date = dateEl.value;
-    const startTime = startEl.value;
-    const endTime = endEl.value;
-    const notes = notesEl ? notesEl.value.trim() : "";
+    const name = nameInput.value.trim();
+    const description = descInput ? descInput.value.trim() : "";
+    const date = dateInput.value;       // "yyyy-MM-dd"
+    const startTime = startInput.value; // "HH:mm"
+    const endTime = endInput.value;     // "HH:mm"
 
     if (!name || !date || !startTime || !endTime) {
         setActivityMessage("Nombre, fecha, inicio y fin son obligatorios.");
         return;
     }
 
+    const startDateTime = `${date}T${startTime}`;
+    const endDateTime = `${date}T${endTime}`;
+
     const body = {
-        name,               // si el DTO tiene Name
-        activityName: name, // si el DTO tiene ActivityName
-        date,
-        startTime,
-        endTime,
-        notes
+        name,
+        description,
+        startTime: startDateTime,
+        endTime: endDateTime
     };
 
     try {
@@ -466,7 +406,6 @@ async function createActivity(e) {
     }
 }
 
-// Eliminar actividad (delegación)
 function initActivityDeleteHandler() {
     const tbody = $("#activitiesTableBody");
     if (!tbody) return;
@@ -492,31 +431,27 @@ function initActivityDeleteHandler() {
 }
 
 // ==========================================================
-// ================== MÓDULO: ASISTENCIAS ===================
+//  MÓDULO: ASISTENCIAS
 // ==========================================================
 
-// Rellena el combo de niños en el formulario de asistencia
 function populateAttendanceChildSelect(childrenArray) {
     const select = $("#attendanceChildId");
     if (!select) return;
 
-    // Si no pasamos nada, lo cargamos desde la API
+    // Si no recibimos array, lo cargamos desde API
     if (!childrenArray) {
         apiRequest("/Children")
             .then(data => populateAttendanceChildSelect(data))
-            .catch(err => {
-                console.error("Error al cargar niños para asistencia:", err);
-            });
+            .catch(err => console.error("Error al cargar niños para asistencia:", err));
         return;
     }
 
     select.innerHTML = `<option value="">Selecciona un niño...</option>`;
-
     childrenArray.forEach(ch => {
-        const option = document.createElement("option");
-        option.value = ch.id;
-        option.textContent = `${ch.firstName} ${ch.lastName}`;
-        select.appendChild(option);
+        const opt = document.createElement("option");
+        opt.value = ch.id;
+        opt.textContent = `${ch.firstName} ${ch.lastName}`;
+        select.appendChild(opt);
     });
 }
 
@@ -524,17 +459,13 @@ async function loadAttendance() {
     const tbody = $("#attendanceTableBody");
     if (!tbody) return;
 
-    tbody.innerHTML = `
-        <tr><td colspan="8" class="table-empty">Cargando asistencias...</td></tr>
-    `;
+    tbody.innerHTML = `<tr><td colspan="8" class="table-empty">Cargando asistencias...</td></tr>`;
 
     try {
-        const data = await apiRequest(ATTENDANCE_PATH); // GET /api/Attendances
+        const data = await apiRequest("/Attendances");
 
         if (!Array.isArray(data) || data.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="8" class="table-empty">No hay asistencias registradas.</td></tr>
-            `;
+            tbody.innerHTML = `<tr><td colspan="8" class="table-empty">No hay asistencias registradas.</td></tr>`;
             return;
         }
 
@@ -547,10 +478,10 @@ async function loadAttendance() {
                     : `Niño #${a.childId ?? ""}`);
 
             const dateRaw = a.date ?? a.attendanceDate ?? null;
-            const status = a.status ?? a.estado ?? "";
-            const checkInRaw = a.checkInTime ?? a.checkIn ?? a.entryTime ?? null;
-            const checkOutRaw = a.checkOutTime ?? a.checkOut ?? a.exitTime ?? null;
-            const notes = a.notes ?? a.observaciones ?? "";
+            const status = a.status ?? "";
+            const checkInRaw = a.checkInTime ?? a.checkIn ?? null;
+            const checkOutRaw = a.checkOutTime ?? a.checkOut ?? null;
+            const notes = a.notes ?? "";
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
@@ -574,8 +505,7 @@ async function loadAttendance() {
         tbody.innerHTML = `
             <tr><td colspan="8" class="table-empty">
                 Error al cargar asistencias: ${err.message}
-            </td></tr>
-        `;
+            </td></tr>`;
     }
 }
 
@@ -586,14 +516,17 @@ async function createAttendance(e) {
     const childId = $("#attendanceChildId")?.value ?? "";
     const date = $("#attendanceDate")?.value ?? "";
     const status = $("#attendanceStatus")?.value ?? "";
-    const checkInTime = $("#attendanceCheckIn")?.value ?? "";
-    const checkOutTime = $("#attendanceCheckOut")?.value ?? "";
+    const checkIn = $("#attendanceCheckIn")?.value ?? "";
+    const checkOut = $("#attendanceCheckOut")?.value ?? "";
     const notes = $("#attendanceNotes")?.value.trim() ?? "";
 
     if (!childId || !date || !status) {
         setAttendanceMessage("Niño, fecha y estado son obligatorios.");
         return;
     }
+
+    const checkInTime = checkIn ? `${date}T${checkIn}` : null;
+    const checkOutTime = checkOut ? `${date}T${checkOut}` : null;
 
     const body = {
         childId: Number(childId),
@@ -605,7 +538,7 @@ async function createAttendance(e) {
     };
 
     try {
-        await apiRequest(ATTENDANCE_PATH, { method: "POST", body });
+        await apiRequest("/Attendances", { method: "POST", body });
         setAttendanceMessage("Asistencia guardada correctamente 💚");
         $("#attendanceForm")?.reset();
         await loadAttendance();
@@ -615,7 +548,6 @@ async function createAttendance(e) {
     }
 }
 
-// Eliminar asistencia (delegación)
 function initAttendanceDeleteHandler() {
     const tbody = $("#attendanceTableBody");
     if (!tbody) return;
@@ -630,7 +562,7 @@ function initAttendanceDeleteHandler() {
         if (!confirm("¿Seguro que quieres eliminar este registro de asistencia?")) return;
 
         try {
-            await apiRequest(`${ATTENDANCE_PATH}/${id}`, { method: "DELETE" });
+            await apiRequest(`/Attendances/${id}`, { method: "DELETE" });
             setAttendanceMessage("Asistencia eliminada correctamente 💚");
             await loadAttendance();
         } catch (err) {
@@ -641,7 +573,7 @@ function initAttendanceDeleteHandler() {
 }
 
 // ==========================================================
-// ================== NAVEGACIÓN LATERAL ====================
+//  NAVEGACIÓN LATERAL
 // ==========================================================
 
 function initNavigation() {
@@ -691,15 +623,14 @@ function initNavigation() {
         btnAttendance.addEventListener("click", () => {
             activate(attendanceView);
             btnAttendance.classList.add("sidebar-btn--active");
-            // cada vez que entras, refrescas lista y combo de niños
             loadAttendance();
-            populateAttendanceChildSelect(); // llama a la API de niños si hace falta
+            populateAttendanceChildSelect();
         });
     }
 }
 
 // ==========================================================
-// ================== INIT GLOBAL ===========================
+//  INIT GLOBAL
 // ==========================================================
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -710,30 +641,22 @@ window.addEventListener("DOMContentLoaded", () => {
     initAttendanceDeleteHandler();
 
     // Eventos niños
-    const childForm = $("#childForm");
-    const reloadChild = $("#btnReloadChildren");
-    if (childForm) childForm.addEventListener("submit", createChild);
-    if (reloadChild) reloadChild.addEventListener("click", loadChildren);
+    $("#childForm")?.addEventListener("submit", createChild);
+    $("#btnReloadChildren")?.addEventListener("click", loadChildren);
 
     // Eventos tutores
-    const guardianForm = $("#guardianForm");
-    const reloadGuardian = $("#btnReloadGuardians");
-    if (guardianForm) guardianForm.addEventListener("submit", createGuardian);
-    if (reloadGuardian) reloadGuardian.addEventListener("click", loadGuardians);
+    $("#guardianForm")?.addEventListener("submit", createGuardian);
+    $("#btnReloadGuardians")?.addEventListener("click", loadGuardians);
 
     // Eventos actividades
-    const activityForm = $("#activityForm");
-    const reloadActivities = $("#btnReloadActivities");
-    if (activityForm) activityForm.addEventListener("submit", createActivity);
-    if (reloadActivities) reloadActivities.addEventListener("click", loadActivities);
+    $("#activityForm")?.addEventListener("submit", createActivity);
+    $("#btnReloadActivities")?.addEventListener("click", loadActivities);
 
     // Eventos asistencias
-    const attendanceForm = $("#attendanceForm");
-    const reloadAttendanceBtn = $("#btnReloadAttendance");
-    if (attendanceForm) attendanceForm.addEventListener("submit", createAttendance);
-    if (reloadAttendanceBtn) reloadAttendanceBtn.addEventListener("click", loadAttendance);
+    $("#attendanceForm")?.addEventListener("submit", createAttendance);
+    $("#btnReloadAttendance")?.addEventListener("click", loadAttendance);
 
-    // Carga inicial: vista niños + combo de niños para asistencia
-    loadChildren();
-    populateAttendanceChildSelect(); // por si abres directamente la pestaña Asistencias
+    // Carga inicial
+    loadChildren();          // llena tabla + combo de asistencia
+    populateAttendanceChildSelect();
 });

@@ -12,7 +12,7 @@ namespace Daycare.Domain.Entities
         public int ChildId { get; set; }
         public Child? Child { get; set; }
 
-        public int ActivityId { get; set; }
+        public int? ActivityId { get; set; }
         public Activity? Activity { get; set; }
 
         public DateTime Date { get; set; } = DateTime.UtcNow;
