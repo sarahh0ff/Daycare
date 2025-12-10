@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Daycare – Panel Infantil</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Cielo y montañitas de fondo hecho solo con CSS -->
+    <div class="background">
+        <div class="hill hill--left"></div>
+        <div class="hill hill--right"></div>
+        <div class="cloud cloud--1"></div>
+        <div class="cloud cloud--2"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="navbar__left">
+            <div class="logo-circle">
+                <span class="logo-icon">🧸</span>
+            </div>
+            <div class="logo-text">
+                <h1>CEMEDFA Daycare</h1>
+                <p>Centro Médico Diagnóstico Familiar – Área Infantil</p>
+            </div>
+        </div>
+
+        <div class="navbar__right">
+            <span class="tag tag--soft">Versión demo</span>
+        </div>
+    </header>
+
+    <main class="layout">
+        <!-- Menú lateral -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Secciones</h2>
+
+            <button id="btnViewChildren" class="sidebar-btn sidebar-btn--active">
+                👶 Niños
+            </button>
+
+            <button id="btnViewGuardians" class="sidebar-btn">
+                👨‍👩‍👧 Tutores
+            </button>
+
+            <button id="btnViewActivities" class="sidebar-btn">
+                🎨 Actividades
+            </button>
+
+            <!-- AHORA TAMBIÉN ACTIVA -->
+            <button id="btnViewAttendance" class="sidebar-btn">
+                📋 Asistencias
+            </button>
+
+            <div class="sidebar-note">
+                🌱 Ya tienes <b>Niños</b> y <b>Tutores</b>. Estás construyendo
+                <b>Actividades</b> y <b>Asistencias</b> para completar el sistema.
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <section class="content">
+            <!-- Tarjetitas de resumen -->
+            <section class="cards-row">
+                <article class="card">
+                    <h3>Niños activos</h3>
+                    <p class="card-number" id="childrenCount">–</p>
+                    <p class="card-caption">Total de registros en el sistema</p>
+                </article>
+                <article class="card card--purple">
+                    <h3>Estado del sistema</h3>
+                    <p class="card-pill">Conectado a la API</p>
+                    <p class="card-caption">Los cambios se guardan en la base de datos</p>
+                </article>
+            </section>
+
+            <!-- Vista Niños -->
+            <section id="childrenView">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de niños 👶</h2>
+                        <p class="section-subtitle">
+                            Crea y administra los pacientes/niños del área infantil.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <section class="panel">
+                    <h3>Agregar nuevo niño</h3>
+                    <form id="childForm" class="form-grid">
+                        <div class="form-field">
+                            <label for="childFirstName">Nombre</label>
+                            <input type="text" id="childFirstName" required placeholder="Ej: Carlos" />
+                        </div>
+                        <div class="form-field">
+                            <label for="childLastName">Apellido</label>
+                            <input type="text" id="childLastName" required placeholder="Ej: Ramírez" />
+                        </div>
+                        <div class="form-field">
+                            <label for="childDateOfBirth">Fecha de nacimiento</label>
+                            <input type="date" id="childDateOfBirth" required />
+                        </div>
+                        <div class="form-field">
+                            <label for="childEmail">Correo</label>
+                            <input type="email" id="childEmail" placeholder="Ej: carlos@mail.com" />
+                        </div>
+                        <div class="form-field">
+                            <label for="childPhone">Teléfono</label>
+                            <input type="text" id="childPhone" placeholder="Ej: 809-555-0000" />
+                        </div>
+                        <div class="form-field">
+                            <label for="childEnrollmentNumber">No. expediente</label>
+                            <input type="text" id="childEnrollmentNumber" placeholder="Ej: CH-001" />
+                        </div>
+                        <div class="form-field">
+                            <label for="childAllergies">Alergias</label>
+                            <input type="text" id="childAllergies" placeholder="Ej: Chocolate, polvo..." />
+                        </div>
+                        <div class="form-field">
+                            <label for="childNotes">Notas</label>
+                            <input type="text" id="childNotes" placeholder="Ej: Muy activo, le gusta dibujar" />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                Guardar niño
+                            </button>
+                        </div>
+                    </form>
+
+                    <p id="childFormMessage" class="form-message"></p>
+                </section>
+
+                <!-- Tabla -->
+                <section class="panel panel--table">
+                    <div class="panel-header">
+                        <h3>Lista de niños registrados</h3>
+                        <button class="btn-secondary" id="btnReloadChildren">Actualizar lista</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="children-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>No. expediente</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="childrenTableBody">
+                                <tr>
+                                    <td colspan="7" class="table-empty">
+                                        Cargando niños...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Vista Tutores -->
+            <section id="guardiansView" class="hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de tutores 👨‍👩‍👧</h2>
+                        <p class="section-subtitle">
+                            Crea y administra los tutores / responsables de los niños.
+                        </p>
+                    </div>
+
+                    <div class="panel-status">
+                        <span class="status-label">Tutores registrados</span>
+                        <span class="status-value" id="guardiansCount">0</span>
+                    </div>
+                </div>
+
+                <!-- Formulario tutores -->
+                <section class="panel">
+                    <h3>Agregar nuevo tutor</h3>
+                    <form id="guardianForm" class="form-grid">
+                        <div class="form-field">
+                            <label for="guardianFirstName">Nombre</label>
+                            <input type="text" id="guardianFirstName" placeholder="Ej: Ana" />
+                        </div>
+                        <div class="form-field">
+                            <label for="guardianLastName">Apellido</label>
+                            <input type="text" id="guardianLastName" placeholder="Ej: Pérez" />
+                        </div>
+                        <div class="form-field">
+                            <label for="guardianPhone">Teléfono</label>
+                            <input type="text" id="guardianPhone" placeholder="Ej: 809-555-0000" />
+                        </div>
+                        <div class="form-field">
+                            <label for="guardianEmail">Correo</label>
+                            <input type="email" id="guardianEmail" placeholder="Ej: ana@mail.com" />
+                        </div>
+                        <div class="form-field">
+                            <label for="guardianRelationship">Relación con el niño</label>
+                            <input type="text" id="guardianRelationship" placeholder="Ej: Madre, Padre, Tía…" />
+                        </div>
+                        <div class="form-field">
+                            <label for="guardianEmergency">Contacto de emergencia</label>
+                            <div class="checkbox-row">
+                                <input type="checkbox" id="guardianEmergency" />
+                                <span>Marcar como contacto de emergencia</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                Guardar tutor
+                            </button>
+                        </div>
+                    </form>
+
+                    <p id="guardianFormMessage" class="form-message"></p>
+                </section>
+
+                <!-- Tabla tutores -->
+                <section class="panel panel--table">
+                    <div class="panel-header">
+                        <h3>Lista de tutores registrados</h3>
+                        <button class="btn-secondary" id="btnReloadGuardians">Actualizar lista</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="guardians-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Relación</th>
+                                    <th>Emergencia</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guardiansTableBody">
+                                <tr>
+                                    <td colspan="8" class="table-empty">
+                                        Cargando tutores...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Vista Actividades -->
+            <section id="activitiesView" class="hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de actividades 🎨</h2>
+                        <p class="section-subtitle">
+                            Programa y administra las actividades diarias del daycare.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Formulario actividades -->
+                <section class="panel">
+                    <h3>Agregar nueva actividad</h3>
+                    <form id="activityForm" class="form-grid">
+                        <div class="form-field">
+                            <label for="activityTitle">Nombre de la actividad</label>
+                            <input type="text" id="activityTitle" placeholder="Ej: Pintura con dedos" />
+                        </div>
+                        <div class="form-field">
+                            <label for="activityDescription">Descripción</label>
+                            <input type="text" id="activityDescription" placeholder="Ej: Actividad artística para fomentar la creatividad" />
+                        </div>
+                        <div class="form-field">
+                            <label for="activityDate">Fecha</label>
+                            <input type="date" id="activityDate" />
+                        </div>
+                        <div class="form-field">
+                            <label for="activityStartTime">Hora inicio</label>
+                            <input type="time" id="activityStartTime" />
+                        </div>
+                        <div class="form-field">
+                            <label for="activityEndTime">Hora fin</label>
+                            <input type="time" id="activityEndTime" />
+                        </div>
+                        <div class="form-field">
+                            <label for="activityNotes">Notas</label>
+                            <input type="text" id="activityNotes" placeholder="Ej: Llevar delantal, grupo de 5 niños" />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                Guardar actividad
+                            </button>
+                        </div>
+                    </form>
+
+                    <p id="activityFormMessage" class="form-message"></p>
+                </section>
+
+                <!-- Tabla actividades -->
+                <section class="panel panel--table">
+                    <div class="panel-header">
+                        <h3>Lista de actividades programadas</h3>
+                        <button class="btn-secondary" id="btnReloadActivities">Actualizar lista</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="activities-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Fecha</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Notas</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activitiesTableBody">
+                                <tr>
+                                    <td colspan="7" class="table-empty">
+                                        Cargando actividades...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Vista Asistencias -->
+            <section id="attendanceView" class="hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de asistencias 📋</h2>
+                        <p class="section-subtitle">
+                            Registra quién vino al daycare y en qué horario.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Formulario asistencias -->
+                <section class="panel">
+                    <h3>Registrar asistencia</h3>
+                    <form id="attendanceForm" class="form-grid">
+                        <div class="form-field">
+                            <label for="attendanceChildId">Niño</label>
+                            <!-- Lo llenaremos por JS con la lista de niños -->
+                            <select id="attendanceChildId">
+                                <option value="">Selecciona un niño...</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="attendanceDate">Fecha</label>
+                            <input type="date" id="attendanceDate" />
+                        </div>
+                        <div class="form-field">
+                            <label for="attendanceStatus">Estado</label>
+                            <select id="attendanceStatus">
+                                <option value="Present">Presente</option>
+                                <option value="Absent">Ausente</option>
+                                <option value="Late">Tarde</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="attendanceCheckIn">Hora entrada</label>
+                            <input type="time" id="attendanceCheckIn" />
+                        </div>
+                        <div class="form-field">
+                            <label for="attendanceCheckOut">Hora salida</label>
+                            <input type="time" id="attendanceCheckOut" />
+                        </div>
+                        <div class="form-field">
+                            <label for="attendanceNotes">Notas</label>
+                            <input type="text" id="attendanceNotes" placeholder="Ej: Se quedó dormido, se fue con la mamá, etc." />
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">
+                                Guardar asistencia
+                            </button>
+                        </div>
+                    </form>
+
+                    <p id="attendanceFormMessage" class="form-message"></p>
+                </section>
+
+                <!-- Tabla asistencias -->
+                <section class="panel panel--table">
+                    <div class="panel-header">
+                        <h3>Lista de asistencias</h3>
+                        <button class="btn-secondary" id="btnReloadAttendance">Actualizar lista</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="attendance-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Niño</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                    <th>Notas</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceTableBody">
+                                <tr>
+                                    <td colspan="8" class="table-empty">
+                                        Cargando asistencias...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

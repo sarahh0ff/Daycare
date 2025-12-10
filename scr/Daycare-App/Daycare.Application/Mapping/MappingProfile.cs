@@ -11,7 +11,7 @@ namespace Daycare.Application.Mapping
         {
             // Entity <-> DTO
 
-            CreateMap<ChildDto, Child>()
+            CreateMap<ChildDto, Child>().ReverseMap()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<Guardian, GuardianDto>().ReverseMap();
             CreateMap<Attendance, AttendanceDto>().ReverseMap()

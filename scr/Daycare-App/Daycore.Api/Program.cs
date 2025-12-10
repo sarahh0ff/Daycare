@@ -47,6 +47,9 @@ internal class Program
 
         var app = builder.Build();
 
+        // Enable static files middleware
+        app.UseStaticFiles();
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

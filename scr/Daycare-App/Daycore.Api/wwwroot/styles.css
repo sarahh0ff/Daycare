@@ -1,0 +1,718 @@
+﻿:root {
+    --bg-body: #f5f7fb;
+    --primary: #7c3aed; /* morado pastel */
+    --primary-soft: #ede9fe;
+    --accent: #34d399; /* verde pastel */
+    --accent-soft: #d1fae5;
+    --text-main: #1f2933;
+    --text-soft: #6b7280;
+    --border-soft: #e5e7eb;
+    --white: #ffffff;
+}
+
+/* reset mínimo */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg-body);
+    color: var(--text-main);
+}
+
+/* Fondo de naturaleza */
+.background {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #e0f2fe 0%, #f5f7fb 60%);
+    z-index: -2;
+}
+
+.hill {
+    position: absolute;
+    bottom: -80px;
+    width: 60%;
+    height: 200px;
+    background: radial-gradient(circle at 30% 0, #a7f3d0 0%, #6ee7b7 40%, #22c55e 100%);
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: -1;
+}
+
+.hill--left {
+    left: -10%;
+}
+
+.hill--right {
+    right: -10%;
+    transform: scaleX(-1);
+}
+
+.cloud {
+    position: absolute;
+    width: 120px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 40px;
+    opacity: 0.9;
+    box-shadow: 30px 10px 0 0 #ffffff, -30px 10px 0 0 #ffffff;
+}
+
+.cloud--1 {
+    top: 40px;
+    left: 10%;
+}
+
+.cloud--2 {
+    top: 80px;
+    right: 15%;
+}
+
+/* Navbar */
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.75rem;
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    color: var(--white);
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);
+}
+
+.navbar__left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.logo-icon {
+    font-size: 1.7rem;
+}
+
+.logo-text h1 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.logo-text p {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.navbar__right {
+    display: flex;
+    align-items: center;
+}
+
+.tag {
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+.tag--soft {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Layout principal */
+
+.layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+/* Sidebar */
+
+.sidebar {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 18px;
+    padding: 1.25rem;
+    box-shadow: 0 10px 25px rgba(148, 163, 184, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.sidebar-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.sidebar-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    border-radius: 999px;
+    border: none;
+    margin-bottom: 0.35rem;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.1s, color 0.2s;
+}
+
+    .sidebar-btn:hover:not(:disabled) {
+        background: #eef2ff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(129, 140, 248, 0.2);
+    }
+
+.sidebar-btn--active {
+    background: linear-gradient(90deg, #a855f7, #f97316);
+    color: white;
+    box-shadow: 0 4px 10px rgba(168, 85, 247, 0.4);
+}
+
+.sidebar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sidebar-note {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    background: #ecfeff;
+    border-radius: 12px;
+    padding: 0.75rem;
+}
+
+/* Content */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cards */
+
+.cards-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.card--purple {
+    background: linear-gradient(135deg, #ede9fe, #cffafe);
+}
+
+.card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.card-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.card-caption {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+}
+
+.card-pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Section header */
+
+.section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    position: relative;
+}
+
+.section-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+}
+
+/* Panel de estado (Tutores) */
+
+.panel-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+}
+
+.status-label {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.status-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* Panels */
+
+.panel {
+    margin-top: 0.75rem;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 18px;
+    padding: 1rem 1.25rem 1.25rem;
+    box-shadow: 0 8px 20px rgba(148, 163, 184, 0.25);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+    .panel h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+.panel--table {
+    margin-top: 1rem;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+/* Formularios */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.form-field label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-soft);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 0.45rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-soft);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border 0.15s, box-shadow 0.15s;
+    background: #f9fafb;
+    font-family: inherit;
+}
+
+.form-field textarea {
+    border-radius: 12px;
+    min-height: 70px;
+    resize: vertical;
+}
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        background: white;
+    }
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.25rem;
+}
+
+/* Checkbox en Tutores */
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+}
+
+    .checkbox-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary);
+    }
+
+/* Botones */
+
+.btn-primary {
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(34, 197, 94, 0.4);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 18px rgba(34, 197, 94, 0.5);
+    }
+
+.btn-secondary {
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--primary);
+    background: #f5f3ff;
+    color: var(--primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s, transform 0.1s;
+}
+
+    .btn-secondary:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+/* Tabla */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    position: relative;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+    .table th,
+    .table td {
+        padding: 0.45rem 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .table th {
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background: #f5f3ff;
+    }
+
+    .table tr:nth-child(even) td {
+        background: #f9fafb;
+    }
+
+.table-empty {
+    text-align: center;
+    color: var(--text-soft);
+}
+
+/* Mensaje formulario */
+
+.form-message {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-soft);
+}
+
+/* Utils */
+
+.hidden {
+    display: none;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        order: 2;
+    }
+
+    .content {
+        order: 1;
+    }
+}
+
+/* Botón eliminar NIÑOS */
+
+.btn-delete {
+    background-color: #ffd6e0; /* Pastel rosado */
+    color: #d9534f; /* Rojo suave */
+    border: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+    /* Icono de basura */
+    .btn-delete::before {
+        content: "🗑️";
+        font-size: 16px;
+    }
+
+    /* Hover */
+    .btn-delete:hover {
+        background-color: #ffb3c1; /* rosado un poco más fuerte */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Active (clic) */
+    .btn-delete:active {
+        transform: scale(0.95);
+    }
+
+/* Opcional: cuando el mouse pasa por la fila completa */
+tr:hover .btn-delete {
+    background-color: #ffa9ba;
+}
+
+/* Botón eliminar TUTORES (mismo estilo) */
+
+.btn-delete-guardian,
+.btn-delete-activity,
+.btn-delete-attendance {
+    background-color: #ffd6e0;
+    color: #d9534f;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+    .btn-delete-guardian::before,
+    .btn-delete-activity::before,
+    .btn-delete-attendance::before {
+        content: "🗑️";
+        font-size: 16px;
+    }
+
+    .btn-delete-guardian:hover,
+    .btn-delete-activity:hover,
+    .btn-delete-attendance:hover {
+        background-color: #ffb3c1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn-delete-guardian:active,
+    .btn-delete-activity:active,
+    .btn-delete-attendance:active {
+        transform: scale(0.95);
+    }
+
+/* ============================================================
+   🐾 MINI ZOO DAYCARE – ANIMALITOS EN LOS PANELES
+   ============================================================ */
+
+.card,
+.panel,
+.sidebar,
+.table-wrapper,
+.section-header,
+#childrenView,
+#guardiansView,
+#activitiesView,
+#attendanceView {
+    position: relative;
+    overflow: hidden;
+}
+
+    /* ---------------- 🦊 Zorro en tarjetas (cards) ---------------- */
+
+    .card::after {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: -18px;
+        right: -14px;
+        background: radial-gradient(circle at 50% 60%, #f97316 45%, transparent 46%), radial-gradient(circle at 35% 40%, white 40%, transparent 41%), radial-gradient(circle at 65% 40%, white 40%, transparent 41%), radial-gradient(circle at 35% 40%, #1f2933 20%, transparent 21%), radial-gradient(circle at 65% 40%, #1f2933 20%, transparent 21%), radial-gradient(ellipse at 50% 80%, white 35%, transparent 36%), radial-gradient(circle at 50% 90%, #1f2933 20%, transparent 21%);
+        opacity: 0.25;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🦒 Jirafa en panels (Niños / Tutores) ---------------- */
+
+    .panel::before {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 100px;
+        bottom: -16px;
+        left: -10px;
+        background: radial-gradient(circle at 40% 30%, #fcd34d 45%, transparent 46%), radial-gradient(circle at 30% 30%, #1f2933 12%, transparent 13%), radial-gradient(circle at 50% 30%, #1f2933 12%, transparent 13%), radial-gradient(ellipse at 40% 65%, #fbbf24 35%, transparent 36%), radial-gradient(circle at 60% 60%, #f59e0b 18%, transparent 19%), radial-gradient(circle at 30% 85%, #f59e0b 18%, transparent 19%), radial-gradient(circle at 50% 90%, #f59e0b 18%, transparent 19%);
+        opacity: 0.23;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐧 Pingüino en las tablas ---------------- */
+
+    .table-wrapper::after {
+        content: "";
+        position: absolute;
+        width: 75px;
+        height: 85px;
+        bottom: -12px;
+        right: 5px;
+        background: radial-gradient(circle at 50% 40%, #111827 48%, transparent 49%), radial-gradient(circle at 50% 60%, white 40%, transparent 41%), radial-gradient(circle at 40% 38%, white 22%, transparent 23%), radial-gradient(circle at 60% 38%, white 22%, transparent 23%), radial-gradient(circle at 40% 38%, black 13%, transparent 14%), radial-gradient(circle at 60% 38%, black 13%, transparent 14%), radial-gradient(ellipse at 50% 52%, orange 16%, transparent 17%);
+        opacity: 0.20;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐨 Koala en la sidebar ---------------- */
+
+    .sidebar::before {
+        content: "";
+        position: absolute;
+        width: 85px;
+        height: 85px;
+        top: 12px;
+        right: 8px;
+        background: radial-gradient(circle at 40% 45%, #9ca3af 45%, transparent 46%), radial-gradient(circle at 30% 45%, #4b5563 18%, transparent 19%), radial-gradient(circle at 50% 45%, #4b5563 18%, transparent 19%), radial-gradient(ellipse at 40% 70%, #6b7280 33%, transparent 34%);
+        opacity: 0.22;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐼 Panda en vista de NIÑOS ---------------- */
+
+    #childrenView::after {
+        content: "";
+        position: absolute;
+        width: 110px;
+        height: 110px;
+        bottom: 10px;
+        right: 10px;
+        background: radial-gradient(circle at 50% 45%, white 48%, transparent 49%), radial-gradient(circle at 30% 30%, #111827 20%, transparent 21%), radial-gradient(circle at 70% 30%, #111827 20%, transparent 21%), radial-gradient(circle at 35% 45%, #111827 22%, transparent 23%), radial-gradient(circle at 65% 45%, #111827 22%, transparent 23%), radial-gradient(circle at 35% 45%, white 12%, transparent 13%), radial-gradient(circle at 65% 45%, white 12%, transparent 13%), radial-gradient(circle at 35% 45%, #111827 6%, transparent 7%), radial-gradient(circle at 65% 45%, #111827 6%, transparent 7%), radial-gradient(ellipse at 50% 65%, #4b5563 18%, transparent 19%);
+        opacity: 0.18;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐰 Conejito en vista de TUTORES ---------------- */
+
+    #guardiansView::before {
+        content: "";
+        position: absolute;
+        width: 105px;
+        height: 120px;
+        top: 0;
+        left: 10px;
+        background: radial-gradient(circle at 50% 55%, #fef2f2 40%, transparent 41%), radial-gradient(ellipse at 35% 25%, #fee2e2 18%, transparent 19%), radial-gradient(ellipse at 65% 25%, #fee2e2 18%, transparent 19%), radial-gradient(circle at 40% 55%, #111827 8%, transparent 9%), radial-gradient(circle at 60% 55%, #111827 8%, transparent 9%), radial-gradient(ellipse at 50% 70%, #fb7185 16%, transparent 17%);
+        opacity: 0.20;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🦜 Loro en vista de ACTIVIDADES ---------------- */
+
+    #activitiesView::after {
+        content: "";
+        position: absolute;
+        width: 115px;
+        height: 115px;
+        top: 5px;
+        right: 20px;
+        background: radial-gradient(circle at 45% 40%, #22c55e 35%, transparent 36%), radial-gradient(circle at 45% 68%, #16a34a 40%, transparent 41%), radial-gradient(ellipse at 70% 50%, #fb923c 20%, transparent 21%), radial-gradient(circle at 40% 40%, white 12%, transparent 13%), radial-gradient(circle at 40% 40%, #111827 6%, transparent 7%), radial-gradient(circle at 20% 80%, #60a5fa 20%, transparent 21%), radial-gradient(circle at 80% 80%, #facc15 16%, transparent 17%);
+        opacity: 0.22;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐸 Ranita en sección-header de ACTIVIDADES ---------------- */
+
+    #activitiesView .section-header::before {
+        content: "";
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        bottom: -6px;
+        left: -6px;
+        background: radial-gradient(circle at 50% 55%, #4ade80 40%, transparent 41%), radial-gradient(circle at 30% 35%, #22c55e 18%, transparent 19%), radial-gradient(circle at 70% 35%, #22c55e 18%, transparent 19%), radial-gradient(circle at 30% 35%, white 10%, transparent 11%), radial-gradient(circle at 70% 35%, white 10%, transparent 11%), radial-gradient(circle at 30% 35%, #111827 5%, transparent 6%), radial-gradient(circle at 70% 35%, #111827 5%, transparent 6%), radial-gradient(ellipse at 50% 70%, #16a34a 20%, transparent 21%);
+        opacity: 0.24;
+        pointer-events: none;
+    }
+
+    /* ---------------- 🐢 Tortuguita en Asistencias ---------------- */
+
+    #attendanceView::after {
+        content: "";
+        position: absolute;
+        width: 95px;
+        height: 80px;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: radial-gradient(circle at 40% 50%, #15803d 40%, transparent 41%), radial-gradient(circle at 40% 50%, #22c55e 22%, transparent 23%), radial-gradient(circle at 20% 30%, #22c55e 16%, transparent 17%), radial-gradient(circle at 60% 30%, #22c55e 16%, transparent 17%), radial-gradient(circle at 20% 70%, #22c55e 16%, transparent 17%), radial-gradient(circle at 60% 70%, #22c55e 16%, transparent 17%), radial-gradient(circle at 80% 50%, #bbf7d0 18%, transparent 19%);
+        opacity: 0.20;
+        pointer-events: none;
+    }
