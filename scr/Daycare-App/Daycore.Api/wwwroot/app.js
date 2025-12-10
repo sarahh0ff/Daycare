@@ -232,9 +232,7 @@ async function loadGuardians() {
                 <td>${g.relationship ?? ""}</td>
                 <td>${g.isEmergencyContact ? "Sí" : "No"}</td>
                 <td>
-                    <button type="button" class="btn-delete-guardian" data-id="${g.id}">
-                        Eliminar
-                    </button>
+                    <button type="button" class="btn-delete-guardian" data-id="${g.id}">Eliminar</button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -319,13 +317,14 @@ async function loadActivities() {
     const tbody = $("#activitiesTableBody");
     if (!tbody) return;
 
-    tbody.innerHTML = `<tr><td colspan="5" class="table-empty">Cargando actividades...</td></tr>`;
+    // Ahora la tabla tiene 7 columnas (Id, Nombre, Fecha, Inicio, Fin, Notas, Acciones)
+    tbody.innerHTML = `<tr><td colspan="7" class="table-empty">Cargando actividades...</td></tr>`;
 
     try {
         const data = await apiRequest("/Activities");
 
         if (!Array.isArray(data) || data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="table-empty">No hay actividades registradas.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="table-empty">No hay actividades registradas.</td></tr>`;
             return;
         }
 
@@ -334,6 +333,7 @@ async function loadActivities() {
             const name = (a.name ?? a.activityName ?? "(sin nombre)").toString();
             const start = a.startTime ?? a.start ?? null;
             const end = a.endTime ?? a.end ?? null;
+            const notes = a.notes ?? a.description ?? "";
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
@@ -342,6 +342,7 @@ async function loadActivities() {
                 <td>${formatDateOnly(start)}</td>
                 <td>${formatTimeOnly(start)}</td>
                 <td>${formatTimeOnly(end)}</td>
+                <td>${notes}</td>
                 <td>
                     <button type="button" class="btn-delete-activity" data-id="${a.id}">
                         Eliminar
@@ -353,7 +354,7 @@ async function loadActivities() {
     } catch (err) {
         console.error(err);
         tbody.innerHTML = `
-            <tr><td colspan="5" class="table-empty">
+            <tr><td colspan="7" class="table-empty">
                 Error al cargar actividades: ${err.message}
             </td></tr>`;
     }
@@ -368,6 +369,7 @@ async function createActivity(e) {
     const dateInput = $("#activityDate");
     const startInput = $("#activityStartTime") || $("#activityStart");
     const endInput = $("#activityEndTime") || $("#activityEnd");
+    const notesInput = $("#activityNotes");
 
     if (!nameInput || !dateInput || !startInput || !endInput) {
         setActivityMessage("Faltan campos del formulario.");
@@ -376,6 +378,7 @@ async function createActivity(e) {
 
     const name = nameInput.value.trim();
     const description = descInput ? descInput.value.trim() : "";
+    const notes = notesInput ? notesInput.value.trim() : "";
     const date = dateInput.value;       // "yyyy-MM-dd"
     const startTime = startInput.value; // "HH:mm"
     const endTime = endInput.value;     // "HH:mm"
@@ -392,7 +395,8 @@ async function createActivity(e) {
         name,
         description,
         startTime: startDateTime,
-        endTime: endDateTime
+        endTime: endDateTime,
+        notes
     };
 
     try {
@@ -530,9 +534,11 @@ async function createAttendance(e) {
 
     const body = {
         childId: Number(childId),
-        date,
+        attendanceDate: date,    // nombre alineado al modelo del backend
         status,
-        checkInTime,
+        checkIn,                 // si tu modelo usa solo hora, cambia a checkInTime
+        checkOut,                // idem
+        checkInTime,             // por si tu backend tiene este campo
         checkOutTime,
         notes
     };

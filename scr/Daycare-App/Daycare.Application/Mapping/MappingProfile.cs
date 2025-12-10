@@ -30,6 +30,8 @@ public class DaycareProfile : Profile
         CreateMap<AttendanceDto, Attendance>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ReverseMap();
+        
+
     }
 }
 
