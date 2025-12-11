@@ -1,4 +1,4 @@
-﻿// Daycore.Api/Controllers/GuardiansController.cs
+﻿
 using Daycare.Application.DTOs;
 using Daycare.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Daycore.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]   // => api/Guardians
+    [Route("api/[controller]")]   
     public class GuardiansController : ControllerBase
     {
         private readonly IGuardianService _guardianService;

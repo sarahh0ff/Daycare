@@ -29,19 +29,19 @@ namespace Daycare.Infrastructure.Repositories
         public async Task AddAsync(Child entity)
         {
             await _context.Children.AddAsync(entity);
-            // SIN SaveChanges aquí
+           
         }
 
         public void Update(Child entity)
         {
             _context.Children.Update(entity);
-            // SIN SaveChanges aquí
+            
         }
 
         public void Delete(Child entity)
         {
             _context.Children.Remove(entity);
-            // SIN SaveChanges aquí
+            
         }
     }
 }

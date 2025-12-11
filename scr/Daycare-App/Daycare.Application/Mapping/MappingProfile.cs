@@ -1,4 +1,4 @@
-﻿// Daycare.Application/Mapping/DaycareProfile.cs
+﻿
 using AutoMapper;
 using Daycare.Domain.Entities;
 using Daycare.Application.DTOs;
@@ -13,8 +13,8 @@ public class DaycareProfile : Profile
     {
         // CHILD
         CreateMap<ChildDto, Child>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore()) // solo DTO -> Entity
-            .ReverseMap();                                   // Entity -> DTO (con Id)
+            .ForMember(dest => dest.Id, opt => opt.Ignore()) 
+            .ReverseMap();                                   
 
         // GUARDIAN
         CreateMap<GuardianDto, Guardian>()

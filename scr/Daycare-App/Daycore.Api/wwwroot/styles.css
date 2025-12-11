@@ -1,8 +1,8 @@
 ﻿:root {
     --bg-body: #f5f7fb;
-    --primary: #7c3aed; /* morado pastel */
+    --primary: #7c3aed; 
     --primary-soft: #ede9fe;
-    --accent: #34d399; /* verde pastel */
+    --accent: #34d399; 
     --accent-soft: #d1fae5;
     --text-main: #1f2933;
     --text-soft: #6b7280;
@@ -10,7 +10,7 @@
     --white: #ffffff;
 }
 
-/* reset mínimo */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,7 +23,7 @@ body {
     color: var(--text-main);
 }
 
-/* Fondo de naturaleza */
+
 .background {
     position: fixed;
     inset: 0;
@@ -71,7 +71,7 @@ body {
     right: 15%;
 }
 
-/* Navbar */
+
 
 .navbar {
     display: flex;
@@ -130,7 +130,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-/* Layout principal */
+
 
 .layout {
     display: grid;
@@ -139,7 +139,7 @@ body {
     padding: 1.5rem;
 }
 
-/* Sidebar */
+
 
 .sidebar {
     background: rgba(255, 255, 255, 0.9);
@@ -198,7 +198,7 @@ body {
     padding: 0.75rem;
 }
 
-/* Content */
+
 
 .content {
     display: flex;
@@ -206,7 +206,7 @@ body {
     gap: 1rem;
 }
 
-/* Cards */
+
 
 .cards-row {
     display: grid;
@@ -251,7 +251,7 @@ body {
     margin-top: 0.25rem;
 }
 
-/* Section header */
+
 
 .section-header {
     display: flex;
@@ -266,7 +266,6 @@ body {
     color: var(--text-soft);
 }
 
-/* Panel de estado (Tutores) */
 
 .panel-status {
     display: flex;
@@ -288,7 +287,7 @@ body {
     color: var(--accent);
 }
 
-/* Panels */
+
 
 .panel {
     margin-top: 0.75rem;
@@ -317,7 +316,7 @@ body {
     margin-bottom: 0.75rem;
 }
 
-/* Formularios */
+
 
 .form-grid {
     display: grid;
@@ -367,7 +366,7 @@ body {
     margin-top: 0.25rem;
 }
 
-/* Checkbox en Tutores */
+
 
 .checkbox-row {
     display: flex;
@@ -383,7 +382,7 @@ body {
         accent-color: var(--primary);
     }
 
-/* Botones */
+
 
 .btn-primary {
     border-radius: 999px;
@@ -419,7 +418,7 @@ body {
         transform: translateY(-1px);
     }
 
-/* Tabla */
+
 
 .table-wrapper {
     width: 100%;
@@ -457,7 +456,7 @@ body {
     color: var(--text-soft);
 }
 
-/* Mensaje formulario */
+
 
 .form-message {
     margin-top: 0.5rem;
@@ -465,13 +464,12 @@ body {
     color: var(--text-soft);
 }
 
-/* Utils */
 
 .hidden {
     display: none;
 }
 
-/* Responsive */
+
 
 @media (max-width: 900px) {
     .layout {
@@ -487,11 +485,11 @@ body {
     }
 }
 
-/* Botón eliminar NIÑOS */
+
 
 .btn-delete {
-    background-color: #ffd6e0; /* Pastel rosado */
-    color: #d9534f; /* Rojo suave */
+    background-color: #ffd6e0; 
+    color: #d9534f; 
     border: none;
     padding: 6px 14px;
     border-radius: 12px;
@@ -506,7 +504,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-    /* Icono de basura */
+    
     .btn-delete::before {
         content: "🗑️";
         font-size: 16px;
@@ -514,22 +512,22 @@ body {
 
     /* Hover */
     .btn-delete:hover {
-        background-color: #ffb3c1; /* rosado un poco más fuerte */
+        background-color: #ffb3c1; 
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
 
-    /* Active (clic) */
+    
     .btn-delete:active {
         transform: scale(0.95);
     }
 
-/* Opcional: cuando el mouse pasa por la fila completa */
+
 tr:hover .btn-delete {
     background-color: #ffa9ba;
 }
 
-/* Botón eliminar TUTORES (mismo estilo) */
+
 
 .btn-delete-guardian,
 .btn-delete-activity,
@@ -571,9 +569,6 @@ tr:hover .btn-delete {
         transform: scale(0.95);
     }
 
-/* ============================================================
-   🐾 MINI ZOO DAYCARE – ANIMALITOS EN LOS PANELES
-   ============================================================ */
 
 .card,
 .panel,
@@ -588,7 +583,7 @@ tr:hover .btn-delete {
     overflow: hidden;
 }
 
-    /* ---------------- 🦊 Zorro en tarjetas (cards) ---------------- */
+    
 
     .card::after {
         content: "";
@@ -603,7 +598,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🦒 Jirafa en panels (Niños / Tutores) ---------------- */
+    
 
     .panel::before {
         content: "";
@@ -618,7 +613,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐧 Pingüino en las tablas ---------------- */
+    
 
     .table-wrapper::after {
         content: "";
@@ -632,7 +627,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐨 Koala en la sidebar ---------------- */
+    
 
     .sidebar::before {
         content: "";
@@ -646,7 +641,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐼 Panda en vista de NIÑOS ---------------- */
+    
 
     #childrenView::after {
         content: "";
@@ -660,8 +655,6 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐰 Conejito en vista de TUTORES ---------------- */
-
     #guardiansView::before {
         content: "";
         position: absolute;
@@ -674,7 +667,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🦜 Loro en vista de ACTIVIDADES ---------------- */
+   
 
     #activitiesView::after {
         content: "";
@@ -688,7 +681,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐸 Ranita en sección-header de ACTIVIDADES ---------------- */
+   
 
     #activitiesView .section-header::before {
         content: "";
@@ -702,7 +695,7 @@ tr:hover .btn-delete {
         pointer-events: none;
     }
 
-    /* ---------------- 🐢 Tortuguita en Asistencias ---------------- */
+    
 
     #attendanceView::after {
         content: "";

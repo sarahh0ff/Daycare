@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <!-- Cielo y montañitas de fondo hecho solo con CSS -->
+    
     <div class="background">
         <div class="hill hill--left"></div>
         <div class="hill hill--right"></div>
@@ -31,7 +31,7 @@
     </header>
 
     <main class="layout">
-        <!-- Menú lateral -->
+        
         <aside class="sidebar">
             <h2 class="sidebar-title">Secciones</h2>
 
@@ -47,7 +47,7 @@
                 🎨 Actividades
             </button>
 
-            <!-- Asistencias -->
+            
             <button id="btnViewAttendance" class="sidebar-btn">
                 📋 Asistencias
             </button>
@@ -58,9 +58,9 @@
             </div>
         </aside>
 
-        <!-- Contenido principal -->
+        
         <section class="content">
-            <!-- Tarjetitas de resumen -->
+            
             <section class="cards-row">
                 <article class="card">
                     <h3>Niños activos</h3>
@@ -74,7 +74,7 @@
                 </article>
             </section>
 
-            <!-- Vista Niños -->
+            
             <section id="childrenView">
                 <div class="section-header">
                     <div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
 
-                <!-- Formulario -->
+                
                 <section class="panel">
                     <h3>Agregar nuevo niño</h3>
                     <form id="childForm" class="form-grid">
@@ -132,7 +132,7 @@
                     <p id="childFormMessage" class="form-message"></p>
                 </section>
 
-                <!-- Tabla -->
+                
                 <section class="panel panel--table">
                     <div class="panel-header">
                         <h3>Lista de niños registrados</h3>
@@ -163,7 +163,7 @@
                 </section>
             </section>
 
-            <!-- Vista Tutores -->
+            
             <section id="guardiansView" class="hidden">
                 <div class="section-header">
                     <div>
@@ -179,7 +179,7 @@
                     </div>
                 </div>
 
-                <!-- Formulario tutores -->
+                
                 <section class="panel">
                     <h3>Agregar nuevo tutor</h3>
                     <form id="guardianForm" class="form-grid">
@@ -221,7 +221,7 @@
                     <p id="guardianFormMessage" class="form-message"></p>
                 </section>
 
-                <!-- Tabla tutores -->
+                
                 <section class="panel panel--table">
                     <div class="panel-header">
                         <h3>Lista de tutores registrados</h3>
@@ -253,7 +253,7 @@
                 </section>
             </section>
 
-            <!-- Vista Actividades -->
+            
             <section id="activitiesView" class="hidden">
                 <div class="section-header">
                     <div>
@@ -264,7 +264,7 @@
                     </div>
                 </div>
 
-                <!-- Formulario actividades -->
+                
                 <section class="panel">
                     <h3>Agregar nueva actividad</h3>
                     <form id="activityForm" class="form-grid">
@@ -303,7 +303,7 @@
                     <p id="activityFormMessage" class="form-message"></p>
                 </section>
 
-                <!-- Tabla actividades -->
+                
                 <section class="panel panel--table">
                     <div class="panel-header">
                         <h3>Lista de actividades programadas</h3>
@@ -334,7 +334,6 @@
                 </section>
             </section>
 
-            <!-- Vista Asistencias -->
             <section id="attendanceView" class="hidden">
                 <div class="section-header">
                     <div>
@@ -345,13 +344,13 @@
                     </div>
                 </div>
 
-                <!-- Formulario asistencias -->
+                
                 <section class="panel">
                     <h3>Registrar asistencia</h3>
                     <form id="attendanceForm" class="form-grid">
                         <div class="form-field">
                             <label for="attendanceChildId">Niño</label>
-                            <!-- Lo llenaremos por JS con la lista de niños -->
+                           
                             <select id="attendanceChildId">
                                 <option value="">Selecciona un niño...</option>
                             </select>
@@ -391,7 +390,7 @@
                     <p id="attendanceFormMessage" class="form-message"></p>
                 </section>
 
-                <!-- Tabla asistencias -->
+               
                 <section class="panel panel--table">
                     <div class="panel-header">
                         <h3>Lista de asistencias</h3>

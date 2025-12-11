@@ -35,21 +35,21 @@ namespace Daycare.Infrastructure.Repositories
         public async Task AddAsync(Guardian guardian)
         {
             await _context.Guardians.AddAsync(guardian);
-            // SIN SaveChanges aquí
+            
         }
 
         public void Update(Guardian guardian)
         {
             guardian.UpdatedAt = DateTime.UtcNow;
             _context.Guardians.Update(guardian);
-            // SIN SaveChanges aquí
+            
         }
 
         public void Delete(Guardian guardian)
         {
             guardian.MarkAsDeleted();
             _context.Guardians.Update(guardian);
-            // SIN SaveChanges aquí
+            
         }
 
         public async Task<bool> ExistsAsync(int id)

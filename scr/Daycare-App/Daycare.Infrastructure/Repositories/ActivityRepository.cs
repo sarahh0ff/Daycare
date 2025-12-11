@@ -36,7 +36,7 @@ namespace Daycare.Infrastructure.Repositories
         public async Task AddAsync(Activity activity)
         {
             await _context.Activities.AddAsync(activity);
-            // SIN SaveChanges aquí
+            
         }
 
         public void Update(Activity activity)
@@ -50,7 +50,7 @@ namespace Daycare.Infrastructure.Repositories
         {
             activity.MarkAsDeleted();
             _context.Activities.Update(activity);
-            // SIN SaveChanges aquí
+            
         }
 
         public async Task<IEnumerable<Activity>> GetByDateAsync(DateTime date)
