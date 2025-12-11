@@ -663,6 +663,6 @@ window.addEventListener("DOMContentLoaded", () => {
     $("#btnReloadAttendance")?.addEventListener("click", loadAttendance);
 
     // Carga inicial
-    loadChildren();          // llena tabla + combo de asistencia
+    loadChildren();          
     populateAttendanceChildSelect();
 });

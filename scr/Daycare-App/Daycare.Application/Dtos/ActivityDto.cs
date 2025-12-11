@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Daycare.Application.DTOs
+namespace Daycare.Application.DTOs //Hola Starling xd
 {
     public class ActivityDto
     {
